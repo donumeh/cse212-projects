@@ -22,16 +22,24 @@
             throw new InvalidOperationException("The queue is empty.");
         }
 
-        // Find the index of the item with the highest priority to remove
+        // FIX 1: Loop must iterate through the entire list. 
+        // Previously it stopped at Count - 1, missing the last item.
         var highPriorityIndex = 0;
-        for (int index = 1; index < _queue.Count - 1; index++)
+        for (int index = 1; index < _queue.Count; index++)
         {
-            if (_queue[index].Priority >= _queue[highPriorityIndex].Priority)
+            // FIX 2: Use '>' instead of '>=' to implement FIFO.
+            // If priorities are equal, we want to keep the one with the lower index 
+            // (the one found first/closest to front).
+            if (_queue[index].Priority > _queue[highPriorityIndex].Priority)
                 highPriorityIndex = index;
         }
 
         // Remove and return the item with the highest priority
         var value = _queue[highPriorityIndex].Value;
+
+        // FIX 3: actually remove the item from the list.
+        _queue.RemoveAt(highPriorityIndex);
+        
         return value;
     }
 
