@@ -25,6 +25,19 @@
     private static int CountDuplicates(int[] data)
     {
         // Add code here.
-        return 0;
+        HashSet<int>   set1 = new HashSet<int>();
+        int count = 0;
+
+        for(int i = 0; i < data.Length; i++)
+        {
+            if (set1.Count != 0 && set1.Contains(data[i]))
+            {
+                count++;
+                continue;
+            }
+            set1.Add(data[i]);
+        }
+        Console.WriteLine($"Total number of values in set is: {set1.Count}");
+        return count;
     }
 }
